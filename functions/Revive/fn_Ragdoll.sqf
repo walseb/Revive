@@ -24,7 +24,7 @@ if(((eyepos _unit) select 2)>0.4) then {
 		};
 		
 		[_unit, false] remoteExec ["hideObject", 0, false];
-		[_unit, "AinjPpneMstpSnonWrflDnon"] remoteExec ["switchMove", 0, false];
+		[_unit, "AinjPpneMstpSnonWrflDnon"] remoteExec ["switchMove", 0, false];// this controls animation when pulling out of vehicle.  changing this to wnon version results in animation issue when pulling out of vehicle but fixes weapon swap issue.
 		
 		//If player is floating in the air, ground him
 		if((getpos _unit select 2) > 5) then {

@@ -5,31 +5,31 @@ if(!isnull _target) then {
 	if (alive _target) then
 	{
 		_target setVariable ["AT_Revive_isDragged", player, true];
-		if(primaryWeapon player != "") then {
-			//Select primary weapon so the player does not switch weapons multiple times after revive
-			private _muzzles = getArray(configFile >> "cfgWeapons" >> (primaryWeapon player) >> "muzzles");
-			if (count _muzzles > 1) then
-			{
-				 player selectWeapon (_muzzles select 0);
-			}
-			else
-			{
-				player selectWeapon (primaryWeapon player);
-			};
-			if(stance player == "PRONE") then {
-				player playMove "AinvPpneMstpSlayWnonDnon_medicOther";
-			} else {
-				player playMove "AinvPknlMstpSlayWrflDnon_medic";
-			};
-		} else {
-			player playMove "AinvPknlMstpSnonWnonDnon_medic_1";
-		};
-		sleep 6;
+		
+		switch (true) do
+		{
+		case ((currentweapon player == "") and (stance player != "PRONE")): {player playmove "AinvPknlMstpSlayWnonDnon_medicOther";};  
+		case ((currentweapon player == "") and (stance player == "PRONE")): {player playmove "AinvPpneMstpSlayWnonDnon_medicOther";}; // these first two lines have to be before the others otherwise reviving with no weapons in hand or on player results in pulling out invisible rifle and standing up after revive
+		case ((currentweapon player == (primaryweapon player)) and (stance player != "PRONE")): {player playmove "AinvPknlMstpSlayWrflDnon_medicOther";};
+		case ((currentweapon player == (secondaryweapon player)) and (stance player != "PRONE")): {player playmove "AinvPknlMstpSlayWlnrDnon_medicOther";};
+		case ((currentweapon player == (handgunweapon player)) and (stance player != "PRONE")): {player playmove "AinvPknlMstpSlayWpstDnon_medicOther";};
+		case ((currentweapon player == (primaryweapon player)) and (stance player == "PRONE")): {player playmove "AinvPpneMstpSlayWrflDnon_medicOther";};
+		case ((currentweapon player == (handgunweapon player)) and (stance player == "PRONE")): {player playmove "AinvPpneMstpSlayWpstDnon_medicOther";};
+		case ((currentweapon player == binocular player) and (stance player != "PRONE")): {player playmove "AinvPknlMstpSlayWnonDnon_medicOther";};
+		case ((currentweapon player == binocular player) and (stance player == "PRONE")): {player playmove "AinvPpneMstpSlayWnonDnon_medicOther";};
+	 	};	
+	};
+		disableUserInput true;
+		sleep 0.1;
+		disableUserInput false;
+		disableUserInput true;
+        disableUserInput false;
+		sleep 5.9;
 		_target setVariable ["AT_Revive_isDragged", objNull, true];
 		
 		if(!(player getVariable ["AT_Revive_isUnconscious",false])) then {
 			_target setVariable ["AT_Revive_isUnconscious", false, true];
-			[_target,"amovppnemstpsraswrfldnon"] remoteExec ["playmove", 0, false];
+			[_target,"AmovPpneMstpSnonWnonDnon"] remoteExec ["switchmove", 0, false]; //Changing this to "AmovPpneMstpSnonWnonDnon" fixes issue where you switch to primary then your previous weapon when you had a different weapon out initially when not pulling out of a car, but causes roll on back animation to break when pulling out of a a vehicle, so the player looks like they are just prone with no weapon equipped. Changing it from "playmove" to "switch move" fixes that issue. It does make the revive animation look a bit more janky since it snap switches instead of transitions but is worth the tradeoff in order for the player to appear dead outside of a vehicle which I believe is more important than the rolling animation.  This could be fixed if Bohemia fixes the bug with the "AinjPpneMstpSnonWnonDnon" animation and I would be able to keep the rolling on stomach animation.
 			
 			if(AT_Revive_Camera==1) then {
 				[] remoteExec ["ATHSC_fnc_exit", _target, false];
@@ -41,7 +41,7 @@ if(!isnull _target) then {
 			_target enableSimulation true;
 			_target allowDamage true;
 			_target setCaptive false;
-			[_target,"amovppnemstpsraswrfldnon"] remoteExec ["playmove", 0, false];
+			[_target,"AmovPpneMstpSnonWrflDnon"] remoteExec ["playmove", 0, false];
 		};
 		
 		//Fix revive underwater
@@ -78,7 +78,6 @@ if(!isnull _target) then {
 				_target setDamage (random 0.3)+0.1;
 			};
 		};
-	};
 } else {
 	systemchat "Target is null";
 };
