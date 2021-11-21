@@ -11,8 +11,14 @@ if(call ATR_FNC_Check_Revive) then {
 
 	[_target] remoteExec ["ATR_FNC_FixRotation", 0, false];
 	
-	[player,"AcinPknlMstpSrasWrflDnon"] remoteExec ["switchMove", 0, false];
-	
+	switch (true) do
+		{
+	case (currentweapon player == ""): {[player,"AcinPknlMstpSnonWnonDnon"] remoteExec ["playmove", 0, false]};
+	case (currentweapon player == binocular player): {[player,"AcinPknlMstpSnonWnonDnon"] remoteExec ["playmove", 0, false]};
+	case (currentweapon player == (primaryweapon player)): {[player,"AcinPknlMstpSrasWrflDnon"] remoteExec ["playmove", 0, false]};
+	case (currentweapon player == (secondaryweapon player)): {[player,"AcinPknlMstpSrasWrflDnon"] remoteExec ["playmove", 0, false]};
+	case (currentweapon player == (handgunweapon player)): {[player,"AcinPknlMstpSnonWpstDnon"] remoteExec ["playmove", 0, false]};
+		};
 	//player playMoveNow "AcinPknlMstpSrasWrflDnon";
 	
 	

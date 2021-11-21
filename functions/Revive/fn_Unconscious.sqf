@@ -38,9 +38,16 @@ if(AT_Revive_Camera==1) then {
 sleep 0.5;
 
 if(vehicle _unit == _unit) then {
-	[_unit,"AinjPpneMstpSnonWrflDnon"] remoteExec ["switchmove", 0, false];
+	[_unit,"AinjPpneMstpSnonWnonDnon"] remoteExec ["switchmove", 0, false];
 };
-_unit enableSimulation false;
+_unit enableSimulation false;  //THIS IS WHAT'S ALLOWING THE ANIMATION TO WORK IN WHEN IT SHOULDN'T "AinjPpneMstpSnonWnonDnon" NORMALLY HAS AN ISSUE WHERE THE _unit IMMEDIATELY ROLLS BACK WHEN A PRIMARY IS EQUIPPED BUT THE DISABLE SIMULATION PREVENTS THAT
+
+switch (true) do
+		{
+		case ((currentweapon _unit == (secondaryweapon _unit)) and (primaryweapon _unit != "")): {_unit selectweapon primaryweapon _unit;};
+		case (((currentweapon _unit == (secondaryweapon _unit)) and (primaryweapon _unit == "")) and (handgunweapon _unit != "")): {_unit selectweapon handgunweapon _unit;}; 
+		case (((currentweapon _unit == (secondaryweapon _unit)) and (primaryweapon _unit == "")) and (handgunweapon _unit == "")): {_unit action ["SwitchWeapon", _unit, _unit, 100];};
+		};
 
 // Call this code only on players
 if (isPlayer _unit) then 
@@ -67,7 +74,7 @@ if (isPlayer _unit) then
 	};
 	private _pos = getposATL _unit;
 	
-	// Player got revived
+	// _unit got revived
 	//sleep 6;
 	
 
