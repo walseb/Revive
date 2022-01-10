@@ -1,9 +1,13 @@
-params["_unit", "_killer"];
+params["_unit", "_killer", "_projectile"];
 _unit setVariable ["AT_Revive_isUnconscious", true, true];
 
 if((side _unit == side _killer) && (_unit != _killer)) then {
-	private _msg = format["%1 was shot by %2.",name _unit, name _killer];
-	_msg remoteExec ["systemchat", 0, false];
+	private _inGameMsg = format["%1 was shot by %2.",name _unit, name _killer];
+	_inGameMsg remoteExec ["systemchat", 0, false];
+
+	private _currentWeapon = currentWeapon _killer;
+	private _distance = _killer distance _unit;
+	diag_log format["Teamkill Report: %1 was shot by %2 with %3 (projectile %4) from %5 meters", name _unit, name _killer, _currentWeapon, _projectile, _distance];
 } else {
 	private _msg = format["%1 is unconscious.",name _unit];
 	_msg remoteExec ["systemchat", 0, false];
@@ -45,16 +49,16 @@ _unit enableSimulation false;  //THIS IS WHAT'S ALLOWING THE ANIMATION TO WORK I
 switch (true) do
 		{
 		case ((currentweapon _unit == (secondaryweapon _unit)) and (primaryweapon _unit != "")): {_unit selectweapon primaryweapon _unit;};
-		case (((currentweapon _unit == (secondaryweapon _unit)) and (primaryweapon _unit == "")) and (handgunweapon _unit != "")): {_unit selectweapon handgunweapon _unit;}; 
+		case (((currentweapon _unit == (secondaryweapon _unit)) and (primaryweapon _unit == "")) and (handgunweapon _unit != "")): {_unit selectweapon handgunweapon _unit;};
 		case (((currentweapon _unit == (secondaryweapon _unit)) and (primaryweapon _unit == "")) and (handgunweapon _unit == "")): {_unit action ["SwitchWeapon", _unit, _unit, 100];};
 		};
 
 // Call this code only on players
-if (isPlayer _unit) then 
+if (isPlayer _unit) then
 {
-	
+
 	while { !isNull _unit && alive _unit && (_unit getVariable "AT_Revive_isUnconscious")} do
-	{			
+	{
 		if(vehicle _unit == _unit && _inVehicle) then {
 			_inVehicle = false;
 			_unit enableSimulation true;
@@ -73,15 +77,15 @@ if (isPlayer _unit) then
 		sleep 0.5;
 	};
 	private _pos = getposATL _unit;
-	
+
 	// _unit got revived
 	//sleep 6;
-	
+
 
 	_unit enableSimulation true;
 	_unit allowDamage true;
 	_unit setCaptive false;
-	
+
 	sleep 0.5;
 	_unit setPosATL _pos; //Fix the stuck in the ground bug
 

@@ -9,6 +9,6 @@ if (alive _unit
 	_unit setDamage 0;
 	_unit allowDamage false;
 	_amountOfDamage = 0;
-	[_unit, _killer] spawn ATR_FNC_Unconscious;
+	[_unit, _killer, _projectile] spawn ATR_FNC_Unconscious;
 };
 _amountOfDamage;
