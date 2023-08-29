@@ -80,7 +80,9 @@ if (isPlayer _unit) then
 
 	// _unit got revived
 	//sleep 6;
-
+	//Track some statistics
+	private _reviveStats = missionNamespace getvariable ["A3E_Revive_Count",0];
+	missionNamespace setvariable ["A3E_Revive_Count",_reviveStats+1,true];
 
 	_unit enableSimulation true;
 	_unit allowDamage true;
