@@ -19,10 +19,20 @@ if(_inCam) then {
 
 	};
 	player switchCamera "Internal";
-	(findDisplay 46) displayRemoveEventHandler ["keyDown", ATHSC_KeyDownHandler];
-	(findDisplay 46) displayRemoveEventHandler ["mouseMoving", ATHSC_MouseHandler];
-	(findDisplay 46) displayRemoveEventHandler ["mouseZChanged", ATHSC_MouseZHandler];
-	ATHSC_KeyDownHandler = -1;
-	ATHSC_MouseHandler = -1;
-	ATHSC_MouseZHandler = -1;
+	
+	private _keh = missionNamespace getvariable ["ATHSC_KeyDownHandler", -1];
+	if(_keh >= 0) then {
+		(findDisplay 46) displayRemoveEventHandler ["keyDown", _keh];
+		ATHSC_KeyDownHandler = nil;
+	};
+	_keh = missionNamespace getvariable ["ATHSC_MouseHandler", -1];
+	if(_keh >= 0) then {
+		(findDisplay 46) displayRemoveEventHandler ["mouseMoving", _keh];
+		ATHSC_MouseHandler = nil;
+	};
+	_keh = missionNamespace getvariable ["ATHSC_MouseZHandler", -1];
+	if(_keh >= 0) then {
+		(findDisplay 46) displayRemoveEventHandler ["mouseZChanged", _keh];
+		ATHSC_MouseZHandler = nil;
+	};
 };

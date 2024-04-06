@@ -27,12 +27,18 @@ ATHSC_Cam = "camera" camCreate (eyePos player);
 cutText ["", "BLACK",0.1];
 sleep 0.5;
 
-
-
-
-ATHSC_KeyDownHandler = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call ATHSC_FNC_keydown;"];
-ATHSC_MouseHandler = (findDisplay 46) displayAddEventHandler ["MouseMoving", "_this call ATHSC_FNC_mouseMove;"];
-ATHSC_MouseZHandler = (findDisplay 46) displayAddEventHandler ["MouseZChanged", "_this call ATHSC_FNC_mouseZMove;"];
+private _keh = missionNamespace getvariable ["ATHSC_KeyDownHandler", -1];
+if(_keh ==-1) then {
+	ATHSC_KeyDownHandler = (findDisplay 46) displayAddEventHandler ["KeyDown", "_this call ATHSC_FNC_keydown;"];
+};
+_keh = missionNamespace getvariable ["ATHSC_MouseHandler", -1];
+if(_keh ==-1) then {
+	ATHSC_MouseHandler = (findDisplay 46) displayAddEventHandler ["MouseMoving", "_this call ATHSC_FNC_mouseMove;"];
+};
+_keh = missionNamespace getvariable ["ATHSC_MouseZHandler", -1];
+if(_keh ==-1) then {
+	ATHSC_MouseZHandler = (findDisplay 46) displayAddEventHandler ["MouseZChanged", "_this call ATHSC_FNC_mouseZMove;"];
+};
 //ATHSC_MouseKeyHandler = (findDisplay 46) displayAddEventHandler ["MouseButtonClick", "_this call ATHSC_FNC_mousekeyclick;"];
 
 

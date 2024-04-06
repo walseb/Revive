@@ -1,4 +1,7 @@
 params["_unit", "_killer", "_projectile"];
+//Check if unit is already uncoscious and exit if true.
+if(_unit getVariable ["AT_Revive_isUnconscious", false]) exitwith {};
+
 _unit setVariable ["AT_Revive_isUnconscious", true, true];
 
 if((side _unit == side _killer) && (_unit != _killer)) then {
