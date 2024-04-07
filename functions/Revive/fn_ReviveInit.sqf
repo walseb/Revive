@@ -16,7 +16,7 @@ if(isNil("AT_Revive_RepawnTime")) then {
 if(isNil("AT_Revive_MinRepawnTime")) then {
 	AT_Revive_MinRepawnTime = getMissionConfigValue ["ATR_minRespawnTime", 10];
 };
-AT_Revive_Debug = true;
+AT_Revive_Debug = false;
 [] spawn
 {
     waitUntil {!isNull player};
