@@ -10,6 +10,6 @@ _target setVariable ["AT_Revive_isUnconscious", false, true];
 _target setVariable ["AT_Revive_isDragged", objNull, true];
 _target setVariable ["AT_Revive_isDragging",objNull,true];
 [_target,""] remoteExec ["switchMove", 0, false];
-if(AT_Revive_Camera==1) then {
+if(missionNamespace getvariable["ATHSC_Run",false]) then {
 	[] call athsc_fnc_exit;
 };

@@ -3,23 +3,24 @@ if(_inCam) then {
 	openMap [false,false];
 	missionNamespace setvariable["ATHSC_Run",false];
 	
-	"HSC" cutFadeOut 0;
-	("HSC" call BIS_fnc_rscLayer) cutText ["","PLAIN"]; //remove
 	[] spawn {
-		cutText ["", "BLACK OUT",0.5];
+		"HSC" cutFadeOut 0;
+		("HSC" call BIS_fnc_rscLayer) cutText ["","PLAIN"]; //remove
+		[] spawn {
+			cutText ["", "BLACK OUT",0.5];
+			sleep 0.5;
+			cutText ["", "BLACK IN",0.5];
+			sleep 0.5;
+		};
 		sleep 0.5;
-		cutText ["", "BLACK IN",0.5];
-		sleep 0.5;
-	};
-	sleep 0.5;
-	if(!isNull ATHSC_Cam) then {
-		ATHSC_Cam cameraEffect ["terminate","back"];
-		camDestroy ATHSC_Cam;
-		ATHSC_Cam = objNull;
+		if(!isNull ATHSC_Cam) then {
+			ATHSC_Cam cameraEffect ["terminate","back"];
+			camDestroy ATHSC_Cam;
+			ATHSC_Cam = objNull;
 
+		};
+		player switchCamera "Internal";
 	};
-	player switchCamera "Internal";
-	
 	private _keh = missionNamespace getvariable ["ATHSC_KeyDownHandler", -1];
 	if(_keh >= 0) then {
 		(findDisplay 46) displayRemoveEventHandler ["keyDown", _keh];

@@ -23,6 +23,8 @@ ATHSC_CamDistance = 15;
 ATHSC_CamAngle = 45;
 ATHSC_Perspective = 0;
 ATHSC_KeyPress = [];
+
+
 ATHSC_Cam = "camera" camCreate (eyePos player);
 cutText ["", "BLACK",0.1];
 sleep 0.5;

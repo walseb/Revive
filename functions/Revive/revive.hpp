@@ -22,3 +22,6 @@ class PullOutVehicle {};
 class Ragdoll {};
 class CopyGear {};
 class WashAshore {};
+class OnRespawn {};
+class BroadcastKill {};
+class unconsciousAnimation {};

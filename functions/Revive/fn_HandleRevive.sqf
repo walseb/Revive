@@ -31,18 +31,11 @@ if(!isnull _target) then {
 			_target setVariable ["AT_Revive_isUnconscious", false, true];
 			[_target,"AmovPpneMstpSnonWnonDnon"] remoteExec ["switchmove", 0, false]; //Changing this to "AmovPpneMstpSnonWnonDnon" fixes issue where you switch to primary then your previous weapon when you had a different weapon out initially when not pulling out of a car, but causes roll on back animation to break when pulling out of a a vehicle, so the player looks like they are just prone with no weapon equipped. Changing it from "playmove" to "switch move" fixes that issue. It does make the revive animation look a bit more janky since it snap switches instead of transitions but is worth the tradeoff in order for the player to appear dead outside of a vehicle which I believe is more important than the rolling animation.  This could be fixed if Bohemia fixes the bug with the "AinjPpneMstpSnonWnonDnon" animation and I would be able to keep the rolling on stomach animation.
 			
-			if(AT_Revive_Camera==1) then {
-				[] remoteExec ["ATHSC_fnc_exit", _target, false];
-			};
+			//if(AT_Revive_Camera==1) then {
+			//	[] remoteExec ["ATHSC_fnc_exit", _target, false];
+			//};
 		};
 		
-		if (!isPlayer _target) then
-		{
-			_target enableSimulation true;
-			_target allowDamage true;
-			_target setCaptive false;
-			[_target,"AmovPpneMstpSnonWrflDnon"] remoteExec ["playmove", 0, false];
-		};
 		
 		//Fix revive underwater
 		if(surfaceIsWater (getpos _target)) then {

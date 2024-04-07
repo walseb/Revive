@@ -1,7 +1,7 @@
 params[["_perspective",-1]];
 
 if(_perspective == 1) then {
-	if(ATHSC_CamTarget iskindof "Man") then {
+	if(ATHSC_CamTarget iskindof "Man" && ATHSC_CamTarget != player) then {
 		if(!isNull ATHSC_Cam) then {
 			ATHSC_Cam cameraEffect ["terminate","back"];
 			camDestroy ATHSC_Cam;
