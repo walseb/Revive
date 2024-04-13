@@ -8,12 +8,8 @@ if (alive _unit
 	&& {_bodyPart in ["","head","face_hub","head_hit","neck","spine1","spine2","spine3","pelvis","body"]}
 ) then {
 	_amountOfDamage = 0;
-	if(!(_unit getVariable ["AT_Revive_isUnconscious", false])) then {
-		_unit setDamage 0;
-		_unit allowDamage false;
-		_unit setVariable ["AT_Revive_isUnconscious", true, true];
-		[_unit] call ATR_FNC_Unconscious;
-		[_unit, _killer, _projectile] spawn ATR_FNC_BroadcastKill;
+	if(count (_unit getVariable ["AT_Revive_setUnconscious", []]) == 0) then {
+		missionNamespace setvariable ["AT_Revive_setUnconscious",[_unit, _killer,_projectile]];
 	};
 };
 _amountOfDamage;
