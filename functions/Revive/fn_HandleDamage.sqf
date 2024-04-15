@@ -9,7 +9,7 @@ if (alive _unit
 ) then {
 	_amountOfDamage = 0;
 	if(count (_unit getVariable ["AT_Revive_setUnconscious", []]) == 0) then {
-		missionNamespace setvariable ["AT_Revive_setUnconscious",[_unit, _killer,_projectile]];
+		missionNamespace setvariable ["AT_Revive_setUnconscious",[_unit, _killer,_projectile,0]];
 	};
 };
 _amountOfDamage;
