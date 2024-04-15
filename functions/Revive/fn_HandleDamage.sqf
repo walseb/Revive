@@ -8,7 +8,7 @@ if (alive _unit
 	&& {_bodyPart in ["","head","face_hub","head_hit","neck","spine1","spine2","spine3","pelvis","body"]}
 ) then {
 	_amountOfDamage = 0;
-	if(count (_unit getVariable ["AT_Revive_setUnconscious", []]) == 0) then {
+	if(count (missionNamespace getVariable ["AT_Revive_setUnconscious", []]) == 0) then {
 		missionNamespace setvariable ["AT_Revive_setUnconscious",[_unit, _killer,_projectile,0]];
 	};
 };
