@@ -17,23 +17,6 @@ if(isNil("AT_Revive_MinRepawnTime")) then {
 	AT_Revive_MinRepawnTime = getMissionConfigValue ["ATR_minRespawnTime", 10];
 };
 AT_Revive_Debug = false;
-if(isNil("AT_Revive_FrameEH")) then {
-	AT_Revive_FrameEH = addMissionEventHandler ["EachFrame", {
-		if(count(missionNamespace getvariable ["AT_Revive_setUnconscious",[]])>0) then {
-			AT_Revive_setUnconscious params["_unit","_killer","_projectile","_frametimer"];
-			if(_frametimer>=3) then {
-				missionNamespace setvariable ["AT_Revive_setUnconscious",[]];
-				_unit setDamage 0;
-				_unit allowDamage false;
-				_unit setVariable ["AT_Revive_isUnconscious", true, true];
-				[_unit] spawn ATR_FNC_Unconscious;
-				[_unit, _killer, _projectile] spawn ATR_FNC_BroadcastKill;
-			} else {
-				missionNamespace setvariable ["AT_Revive_setUnconscious",[_unit,_killer,_projectile,_frametimer+1]];
-			};
-		};
-	}];
-};
 
 [] spawn
 {
