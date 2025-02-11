@@ -43,12 +43,7 @@ if(!isnull _target) then {
 			[player,""] remoteExec ["switchmove", 0, false];
 		};
 		
-		private _attendant = [(configfile >> "CfgVehicles" >> typeof player),"attendant",0] call BIS_fnc_returnConfigEntry; 
-		private _medkits = missionNamespace getvariable ["a3e_arr_medkits",["Medikit"]];
 		private _faks = missionNamespace getvariable ["a3e_arr_faks",["FirstAidKit"]];
-		if(_attendant == 1 && (items player findIf {_x in _medkits} > -1)) then {
-			_target setDamage 0;
-		} else {
 			if(_fakUsed) then {
 				private _items = items player;
 				private _itemIndex = _items findIf {_x in _faks};
@@ -70,7 +65,6 @@ if(!isnull _target) then {
 			} else {
 				_target setDamage (random 0.3)+0.1;
 			};
-		};
 } else {
 	systemchat "Target is null";
 };
