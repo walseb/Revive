@@ -62,6 +62,21 @@ if(!isnull _target) then {
 						_target setDamage (random 0.3)+0.1;
 					};
 				};
+
+
+                                // Take two of them
+				_itemIndex = _items findIf {_x in _faks};
+				if(_itemIndex > -1) then {
+					player removeitem (_items select _itemIndex);
+				} else {
+					//No FAK in player inventory Check the other guy
+					_items = items _target;
+					_itemIndex = _items findIf {_x in _faks};
+					if(_itemIndex > -1) then {
+						_target removeitem (_items select _itemIndex);
+					} else {
+					};
+				};
 			} else {
 				_target setDamage (random 0.3)+0.1;
 			};
